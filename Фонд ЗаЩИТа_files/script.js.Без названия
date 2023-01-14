@@ -1,0 +1,250 @@
+$(function ($) {
+    $(".phone-mask").mask("+7 (999) 999-99-99");
+/*
+    $('.feedback-form').on('submit', function (e) {
+        e.preventDefault();
+
+        const $form = $(this),
+                $button = $form.find('button'),
+                feedbackModal = bootstrap.Modal.getOrCreateInstance($('#feedbackModal').get(0)),
+                feedbackOkModal = bootstrap.Modal.getOrCreateInstance($('#feedbackModalOk').get(0));
+
+        let canSend = true;
+
+        $form.find('.is-invalid').removeClass('is-invalid');
+        $form.find('[required]').each(function (i, item) {
+            if ($(item).prop('type') == 'checkbox') {
+                if (!$(item).is(':checked')) {
+                    $(item).addClass('is-invalid');
+                    canSend = false;
+                }
+            } else {
+                if ($(item).val() == '') {
+                    $(item).addClass('is-invalid');
+                    canSend = false;
+                }
+            }
+        });
+
+        if (canSend) {
+            $.ajax({
+                type: "POST",
+                url: '/ajax/feedback/',
+                data: new FormData($form[0]),
+                dataType: 'json',
+                processData: false,
+                contentType: false,
+                beforeSend: function () {
+                    $button.attr('disabled', true);
+                },
+                complete: function () {
+                    $button.attr('disabled', false);
+                },
+                success: function (data) {
+                    if (typeof data.error != 'undefined') {
+                        if (Array.isArray(data.error)) {
+                            $.each(data.error, function (i, code) {
+                                $form.find('[name="' + code + '"]').addClass('is-invalid');
+                            });
+                        } else {
+                            alert(data.error);
+                        }
+                    } else {
+                        feedbackModal.hide();
+                        feedbackOkModal.show();
+                        $form.trigger("reset");
+                    }
+                },
+            });
+        }
+    });
+
+    $('.donation-form').on('submit', function (e) {
+        e.preventDefault();
+
+        const $form = $(this),
+                $button = $form.find('button');
+
+        let canSend = true;
+
+        $form.find('.is-invalid').removeClass('is-invalid');
+        $form.find('[required]').each(function (i, item) {
+            if ($(item).prop('type') == 'checkbox') {
+                if (!$(item).is(':checked')) {
+                    $(item).addClass('is-invalid');
+                    canSend = false;
+                }
+            } else {
+                if ($(item).val() == '') {
+                    $(item).addClass('is-invalid');
+                    canSend = false;
+                }
+            }
+        });
+
+        if (canSend) {
+            $.ajax({
+                type: "POST",
+                url: '/ajax/pay/psb/',
+                data: new FormData($form[0]),
+                dataType: 'json',
+                processData: false,
+                contentType: false,
+                beforeSend: function () {
+                    $button.attr('disabled', true);
+                },
+                complete: function () {
+                    $button.attr('disabled', false);
+                },
+                success: function (data) {
+                    if (typeof data.error != 'undefined') {
+                        if (Array.isArray(data.error)) {
+                            $.each(data.error, function (i, code) {
+                                $form.find('[name="' + code + '"]').addClass('is-invalid');
+                            });
+                        } else {
+                            alert(data.error);
+                        }
+                    } else {
+                        const formPlaceholder = $('#psbPlaceholder');
+                        formPlaceholder.html(data.form);
+                        formPlaceholder.find('form').submit();
+                    }
+                },
+            });
+        }
+    });
+
+    $('.donation-form2').on('submit', function (e) {
+        e.preventDefault();
+
+        const $form = $(this),
+                $button = $form.find('button');
+
+        let canSend = true;
+
+        $form.find('.is-invalid').removeClass('is-invalid');
+        $form.find('[required]').each(function (i, item) {
+            if ($(item).prop('type') == 'checkbox') {
+                if (!$(item).is(':checked')) {
+                    $(item).addClass('is-invalid');
+                    canSend = false;
+                }
+            } else {
+                if ($(item).val() == '') {
+                    $(item).addClass('is-invalid');
+                    canSend = false;
+                }
+            }
+        });
+
+        if (canSend) {
+            $.ajax({
+                type: "POST",
+                url: '/ajax/pay/sber/',
+                data: new FormData($form[0]),
+                dataType: 'json',
+                processData: false,
+                contentType: false,
+                beforeSend: function () {
+                    $button.attr('disabled', true);
+                },
+                complete: function () {
+                    $button.attr('disabled', false);
+                },
+                success: function (data) {
+                    if (typeof data.error != 'undefined') {
+                        if (Array.isArray(data.error)) {
+                            $.each(data.error, function (i, code) {
+                                $form.find('[name="' + code + '"]').addClass('is-invalid');
+                            });
+                        } else {
+                            alert(data.error);
+                        }
+                    } else {
+                        window.location.href = data.url;
+                    }
+                },
+            });
+        }
+    });
+*/
+    $('.ajax-form').on('submit', function (e) {
+        e.preventDefault();
+
+        const $form = $(this),
+                $button = $form.find('button'),
+                modalName = $form.data('modal-name'),
+                modalOkName = $form.data('modal-ok-name'),
+                placeholderName = $form.data('placeholder-name'),
+                ajaxUrl = $form.data('ajax');
+
+        if (ajaxUrl != '') {
+            let canSend = true;
+
+            $form.find('.is-invalid').removeClass('is-invalid');
+            $form.find('[required]').each(function (i, item) {
+                if ($(item).prop('type') == 'checkbox') {
+                    if (!$(item).is(':checked')) {
+                        $(item).addClass('is-invalid');
+                        canSend = false;
+                    }
+                } else {
+                    if ($(item).val() == '') {
+                        $(item).addClass('is-invalid');
+                        canSend = false;
+                    }
+                }
+            });
+
+            if (canSend) {
+                $.ajax({
+                    type: "POST",
+                    url: ajaxUrl,
+                    data: new FormData($form[0]),
+                    dataType: 'json',
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function () {
+                        $button.attr('disabled', true);
+                    },
+                    complete: function () {
+                        $button.attr('disabled', false);
+                    },
+                    success: function (data) {
+                        if (typeof data.error != 'undefined') {
+                            if (Array.isArray(data.error)) {
+                                $.each(data.error, function (i, code) {
+                                    $form.find('[name="' + code + '"]').addClass('is-invalid');
+                                });
+                            } else {
+                                alert(data.error);
+                            }
+                        } else {
+                            if (typeof modalOkName != 'undefined') {
+                                if (typeof modalName != 'undefined') {
+                                    const modal = bootstrap.Modal.getOrCreateInstance($('#' + modalName + 'Modal').get(0));
+                                    modal.hide();
+                                }
+
+                                if (typeof data.message != 'undefined') {
+                                    $('#' + modalOkName + 'Modal').find('.modal-text').html(data.message);
+                                }
+
+                                const okModal = bootstrap.Modal.getOrCreateInstance($('#' + modalOkName + 'Modal').get(0));
+                                okModal.show();
+                            } else if (typeof placeholderName != 'undefined') {
+                                const formPlaceholder = $('#' + placeholderName);
+                                formPlaceholder.html(data.form);
+                                formPlaceholder.find('form').submit();
+                            } else if (data.url != '') {
+                                window.location.href = data.url;
+                            }
+                            $form.trigger("reset");
+                        }
+                    },
+                });
+            }
+        }
+    });
+});
